@@ -1,0 +1,81 @@
+TEMA 1 SD - Editor text
+------------------------------------------------------------------------------
+Introducere:
+    Acest program are ca scop implementarea unui editor de text minimal, fara
+interfata grafica. Acesta dispune de o serie de functii. 
+
+Descriere:
+    Utilizatorul poate folosi doua moduri diferite ale programului: editor si
+inserare text. Cele doua moduri sunt delimitate prin comanda "::i". In modul
+inserare text, programul insereaza text ce poate fi salvat ulterior, 
+modificarile fiind salvate doar in urma comenzii save. In modul editor, 
+programul urmeaza functiile introduse succesiv pe cate o singura linie.
+
+Functionalitate generala:
+    Pentru inserarea de text se foloseste un fisier numit "editor.in", iar
+afisarea textului salvat se face in "editor.out". Programul citeste fiecare
+caracter in parte din fisier si le stocheaza intr-o lista dublu inlantuita.
+Primul pas este diferit, pentru a stoca primul caracter din sir in header.
+Intrucat se poate incepe doar din mod de inserare text si trecerea dintre 
+moduri este doar interschimbabila, introducem o variabila mod care ne arata
+modul in care ne aflam (par - mod inserare text; impar - mod editor). In modul
+de inserare text doar se introduce caracterul in lista si in acelasi timp se
+verifica aparitia secventei "::i". Totodata, in cazul in care nu suntem
+la prima intrare in mod inserare text se stocheaza textul intr-un sir "deleted"
+in eventualitatea aparitiei comenzii undo imediat dupa intrarea in modul editor. 
+In partea opusa, in modul editor, la fiecare caracter se verifica aparitia 
+caracterului "\n" deoarece il consideram delimitator de functii, in caz contrar
+concatenam caracterul intr-un sir numit command, care stocheaza comanda pentru
+compararea ei cu functiile cunoscute de program. In cazul aparitiei "\n", se
+verifica aparitia secventei "::i" pentru schimbarea modului de lucru, altfel,
+programul intra in functia de editor. In oricare dintre cazuri, comanda este 
+stocata intr-o stiva de comenzi. Functia "editor" compara comanda primita cu
+functiile cunoscute de program.
+
+Functii implementate:
+-> save ("s")
+    Aceasta functie salveaza textul inserat si posibil modificat in fisierul
+"editor.out". La aparitia functiei save, stiva se goleste.
+    Exemplu: s
+
+-> quit ("q")
+    Aceasta functie inchide intregul program.
+    Exemplu: q
+
+-> go to line ("gl [line]")
+    Aceasta functie trece cursorul de pe pozitia sa, la inceputul liniei 
+indicate de parametrul primit.
+    Exemplu: gl 3
+
+-> backspace ("b")
+    Aceasta functie sterge caracterul aflat inaintea cursorului.
+    Exemplu: b 
+
+-> delete line ("dl [line]")
+    Aceasta functie sterge intreaga linie specificata de parametrul line, care
+nu este obligatoriu. In cazul absentei parametrului line, se sterge linia pe
+care se afla cursorul la momentul respectiv.
+    Exemplu: dl 3
+
+-> go to character ("gc [position] [line]")
+    Aceasta functie trece cursorul de pe pozitia sa, la pozitia indicata de 
+parametrul position de pe linie indicata de parametrul line. Parametrul line 
+nu este obligatoriu. In cazul absentei parametrului line, se trece pe positia
+position de pe randul la care se afla cursorul in momentul respectiv.
+    Exemplu: gc 4 5
+
+-> delete ("d [nr_of_characters]")
+    Aceasta functie sterge un numar de caractere de dupa cursor, indicat prin
+parametrul nr_of_characters. Parametrul nr_of_characters nu este obligatoriu.
+In cazul absentei acestuia, se sterge doar primul caracter de dupa cursor.
+    Exemplu: d 4
+
+-> undo ("u")
+    Anuleaza rezultatul functiei aplicate anterior. (Implementat doar pentru
+inserarea de text, nu si pentru alte functii)
+    Exemplu: u
+
+-> redo ("r")
+    Anuleaza rezultatul functiei de undo. (Implementat doar pentru inserarea de
+text, nu si pentru alte functii)
+    Exemplu: r
